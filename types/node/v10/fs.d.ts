@@ -813,16 +813,9 @@ declare module "fs" {
      */
     function readdir(
         path: PathLike,
-        options: { encoding: BufferEncoding | null; withFileTypes?: false } | BufferEncoding | undefined | null,
-        callback: (err: NodeJS.ErrnoException, files: string[]) => void,
+        options: { encoding?: BufferEncoding | null; withFileTypes?: boolean } | BufferEncoding | null,
+        callback: (err: NodeJS.ErrnoException, files: string[] | Dirent[]) => void
     ): void;
-
-    /**
-     * Asynchronous readdir(3) - read a directory.
-     * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
-     * @param options The encoding (or an object specifying the encoding), used as the encoding of the result. If not provided, `'utf8'` is used.
-     */
-    function readdir(path: PathLike, options: { encoding: "buffer"; withFileTypes?: false } | "buffer", callback: (err: NodeJS.ErrnoException, files: Buffer[]) => void): void;
 
     /**
      * Asynchronous readdir(3) - read a directory.
@@ -831,22 +824,9 @@ declare module "fs" {
      */
     function readdir(
         path: PathLike,
-        options: { encoding?: string | null; withFileTypes?: false } | string | undefined | null,
-        callback: (err: NodeJS.ErrnoException, files: string[] | Buffer[]) => void,
+        options: { encoding?: BufferEncoding | null; withFileTypes?: boolean } | BufferEncoding | null,
+        callback: (err: NodeJS.ErrnoException, files: string[] | Dirent[]) => void
     ): void;
-
-    /**
-     * Asynchronous readdir(3) - read a directory.
-     * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
-     */
-    function readdir(path: PathLike, callback: (err: NodeJS.ErrnoException, files: string[]) => void): void;
-
-    /**
-     * Asynchronous readdir(3) - read a directory.
-     * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
-     * @param options If called with `withFileTypes: true` the result data will be an array of Dirent.
-     */
-    function readdir(path: PathLike, options: { withFileTypes: true }, callback: (err: NodeJS.ErrnoException, files: Dirent[]) => void): void;
 
     // NOTE: This namespace provides design-time support for util.promisify. Exported members do not exist at runtime.
     namespace readdir {
@@ -855,28 +835,8 @@ declare module "fs" {
          * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
          * @param options The encoding (or an object specifying the encoding), used as the encoding of the result. If not provided, `'utf8'` is used.
          */
-        function __promisify__(path: PathLike, options?: { encoding: BufferEncoding | null; withFileTypes?: false } | BufferEncoding | null): Promise<string[]>;
+        function __promisify__(path: PathLike, options?: { encoding?: BufferEncoding | null; withFileTypes?: false } | BufferEncoding | null): Promise<string[] | Dirent[]>;
 
-        /**
-         * Asynchronous readdir(3) - read a directory.
-         * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
-         * @param options The encoding (or an object specifying the encoding), used as the encoding of the result. If not provided, `'utf8'` is used.
-         */
-        function __promisify__(path: PathLike, options: "buffer" | { encoding: "buffer"; withFileTypes?: false }): Promise<Buffer[]>;
-
-        /**
-         * Asynchronous readdir(3) - read a directory.
-         * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
-         * @param options The encoding (or an object specifying the encoding), used as the encoding of the result. If not provided, `'utf8'` is used.
-         */
-        function __promisify__(path: PathLike, options?: { encoding?: string | null; withFileTypes?: false } | string | null): Promise<string[] | Buffer[]>;
-
-        /**
-         * Asynchronous readdir(3) - read a directory.
-         * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
-         * @param options If called with `withFileTypes: true` the result data will be an array of Dirent
-         */
-        function __promisify__(path: PathLike, options: { withFileTypes: true }): Promise<Dirent[]>;
     }
 
     /**
@@ -884,28 +844,7 @@ declare module "fs" {
      * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
      * @param options The encoding (or an object specifying the encoding), used as the encoding of the result. If not provided, `'utf8'` is used.
      */
-    function readdirSync(path: PathLike, options?: { encoding: BufferEncoding | null; withFileTypes?: false } | BufferEncoding | null): string[];
-
-    /**
-     * Synchronous readdir(3) - read a directory.
-     * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
-     * @param options The encoding (or an object specifying the encoding), used as the encoding of the result. If not provided, `'utf8'` is used.
-     */
-    function readdirSync(path: PathLike, options: { encoding: "buffer"; withFileTypes?: false } | "buffer"): Buffer[];
-
-    /**
-     * Synchronous readdir(3) - read a directory.
-     * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
-     * @param options The encoding (or an object specifying the encoding), used as the encoding of the result. If not provided, `'utf8'` is used.
-     */
-    function readdirSync(path: PathLike, options?: { encoding?: string | null; withFileTypes?: false } | string | null): string[] | Buffer[];
-
-    /**
-     * Asynchronous readdir(3) - read a directory.
-     * @param path A path to a file. If a URL is provided, it must use the `file:` protocol.
-     * @param options If called with `withFileTypes: true` the result data will be an array of Dirent.
-     */
-    function readdirSync(path: PathLike, options: { withFileTypes: true }): Dirent[];
+    function readdirSync(path: PathLike, options?: { encoding?: BufferEncoding | null; withFileTypes?: boolean } | BufferEncoding | null): string[] | Dirent[];
 
     /**
      * Asynchronous close(2) - close a file descriptor.
